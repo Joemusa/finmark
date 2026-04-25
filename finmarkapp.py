@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
 # -----------------------
 # PAGE SETUP
@@ -15,8 +16,9 @@ def load_data():
     df = pd.read_csv("clean_data.csv")
 
     # -------- CLEAN / TRANSFORM --------
-    
-    # Convert Yes/No style columns
+    df.columns = df.columns.str.strip()
+
+    # Convert Yes/No values
     df['BANKED'] = df['BANKED'].replace({2: 0})
     df['MM'] = df['MM'].replace({2: 0})
     df['INSURANCE'] = df['INSURANCE'].replace({2: 0})
@@ -35,7 +37,7 @@ def load_data():
         (df['Included'] == 1) & (df['Insured'] == 0)
     ).astype(int)
 
-    # Decode Gender (for better display)
+    # Decode Gender
     df['Gender'] = df['c9'].map({
         1: 'Male',
         2: 'Female'
@@ -64,7 +66,7 @@ if gender:
     filtered_df = filtered_df[filtered_df['Gender'].isin(gender)]
 
 # -----------------------
-# KPIs (USE filtered_df)
+# KPIs
 # -----------------------
 included_pct = filtered_df['Included'].mean() * 100
 insured_pct = filtered_df['Insured'].mean() * 100
@@ -78,25 +80,49 @@ col3.metric("Insurance Penetration", f"{insured_pct:.1f}%")
 col4.metric("Insurance Gap", f"{gap_pct:.1f}%")
 
 # -----------------------
-# CHART
+# CHARTS (COMPACT)
 # -----------------------
-st.subheader("Market Overview")
+colA, colB = st.columns(2)
 
-chart_data = filtered_df[['Included','Insured','Insurance_Gap']].mean()
+# 📊 Market Overview
+chart_data = filtered_df[['Included','Insured','Insurance_Gap']].mean().reset_index()
+chart_data.columns = ['Metric', 'Value']
 
-st.bar_chart(chart_data)
+fig1 = px.bar(
+    chart_data,
+    x='Metric',
+    y='Value',
+    title="Market Overview"
+)
+
+fig1.update_layout(
+    height=300,
+    margin=dict(l=20, r=20, t=40, b=20)
+)
+
+# 📊 Insurance Gap by Gender
+gap_by_gender = filtered_df.groupby('Gender')['Insurance_Gap'].mean().reset_index()
+
+fig2 = px.bar(
+    gap_by_gender,
+    x='Gender',
+    y='Insurance_Gap',
+    title="Insurance Gap by Gender"
+)
+
+fig2.update_layout(
+    height=300,
+    margin=dict(l=20, r=20, t=40, b=20)
+)
+
+with colA:
+    st.plotly_chart(fig1, use_container_width=True)
+
+with colB:
+    st.plotly_chart(fig2, use_container_width=True)
 
 # -----------------------
-# SEGMENT ANALYSIS
-# -----------------------
-st.subheader("Insurance Gap by Gender")
-
-gap_by_gender = filtered_df.groupby('Gender')['Insurance_Gap'].mean()
-
-st.bar_chart(gap_by_gender)
-
-# -----------------------
-# INSIGHT
+# INSIGHT BOX
 # -----------------------
 st.subheader("Key Insight")
 
@@ -105,4 +131,6 @@ st.info(f"""
 
 👉 This represents a strong opportunity to target existing financial users
 with insurance products.
+
+👉 Focus on segments where financial inclusion is high but insurance uptake is low.
 """)
