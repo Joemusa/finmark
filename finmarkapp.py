@@ -117,8 +117,7 @@ top_segment = combined.sort_values(
     ascending=False
 ).head(3)
 
-if st.sidebar.button("Reset Filters"):
-    st.experimental_rerun()
+
 
 # -----------------------
 # KPIs
