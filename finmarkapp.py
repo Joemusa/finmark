@@ -43,6 +43,12 @@ def load_data():
         2: 'Female'
     })
 
+    df['Age_Group'] = pd.cut(
+    df['c8c'],
+    bins=[0, 25, 35, 50, 65, 100],
+    labels=['18-25','26-35','36-50','51-65','65+']
+    )
+
     return df
 
 df = load_data()
