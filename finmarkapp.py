@@ -64,6 +64,15 @@ def load_data():
     bins=[0, 0.4, 0.7, 1],
     labels=['Vulnerable', 'Moderate', 'Healthy']
     )
+    combined = filtered_df.groupby(
+        ['Age_Group','Health_Group']
+    )['Insurance_Gap'].mean().reset_index()
+
+    combined = combined.dropna()
+        top_segment = combined.sort_values(
+        by='Insurance_Gap',
+        ascending=False
+    ).iloc[0]
 
     return df
 
@@ -276,3 +285,42 @@ Top Opportunity Segment: {top_health['Health_Group']}
 👉 Insurance gap: {top_health['Insurance_Gap']*100:.1f}%
 👉 Prioritize this segment for tailored insurance products
 """)
+
+st.subheader("🎯 Top Target Segment")
+
+st.success(f"""
+**Age Group:** {top_segment['Age_Group']}  
+**Financial Health:** {top_segment['Health_Group']}  
+
+👉 Insurance Gap: {top_segment['Insurance_Gap']*100:.1f}%  
+
+💡 This segment represents the highest opportunity for insurance expansion.
+
+👉 Recommended Action:
+- Design affordable products
+- Use simple onboarding
+- Leverage mobile channels
+""")
+
+fig_combined = px.bar(
+    combined,
+    x='Age_Group',
+    y='Insurance_Gap',
+    color='Health_Group',
+    text='Insurance_Gap',
+    barmode='group',
+    title="Insurance Gap by Age & Financial Health"
+)
+
+fig_combined.update_traces(
+    texttemplate='%{text:.1%}',
+    textposition='outside'
+)
+
+fig_combined.update_layout(
+    height=350,
+    yaxis=dict(showgrid=False, title=""),
+    xaxis=dict(title="")
+)
+
+st.plotly_chart(fig_combined, use_container_width=True)
