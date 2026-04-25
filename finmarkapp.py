@@ -32,3 +32,12 @@ st.subheader("Market Overview")
 chart_data = df[['Included','Insured','Insurance_Gap']].mean()
 
 st.bar_chart(chart_data)
+
+st.subheader("Key Insight")
+
+st.info(f"""
+{gap_pct:.1f}% of the population is financially active but uninsured.
+
+👉 This represents a strong opportunity to convert existing financial users
+into insurance customers.
+""")
