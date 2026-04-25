@@ -113,7 +113,7 @@ combined = filtered_df.groupby(
 
 combined = combined.dropna()
 
-top_segments = combined.sort_values(
+top_segment = combined.sort_values(
     by='Insurance_Gap',
     ascending=False
 ).head(3)
