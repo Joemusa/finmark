@@ -50,14 +50,14 @@ def load_data():
     )
 
    df['Financial_Stress'] = (
-    (df['e_1_1'] == 1) |
-    (df['e_1_2'] == 1)
-).astype(int)
+       (df['e_1_1'] == 1) |
+       (df['e_1_2'] == 1)
+   ).astype(int)
 
-df['Financial_Health'] = (
-    (1 - df['Financial_Stress']) +
-    df['Included']
-) / 2
+    df['Financial_Health'] = (
+        (1 - df['Financial_Stress']) +
+        df['Included']
+    ) / 2
 
     df['Health_Group'] = pd.cut(
     df['Financial_Health'],
