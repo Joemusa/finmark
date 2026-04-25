@@ -64,15 +64,7 @@ def load_data():
     bins=[0, 0.4, 0.7, 1],
     labels=['Vulnerable', 'Moderate', 'Healthy']
     )
-    combined = filtered_df.groupby(
-        ['Age_Group','Health_Group']
-    )['Insurance_Gap'].mean().reset_index()
-
-    combined = combined.dropna()
-    top_segment = combined.sort_values(
-        by='Insurance_Gap',
-        ascending=False
-    ).iloc[0]
+    
 
     return df
 
@@ -113,6 +105,16 @@ if age_group:
 
 if health:
     filtered_df = filtered_df[filtered_df['Health_Group'].isin(health)]
+
+combined = filtered_df.groupby(
+        ['Age_Group','Health_Group']
+    )['Insurance_Gap'].mean().reset_index()
+
+    combined = combined.dropna()
+    top_segment = combined.sort_values(
+        by='Insurance_Gap',
+        ascending=False
+    ).iloc[0]
 
 
 
