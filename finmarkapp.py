@@ -136,7 +136,14 @@ top_segment = combined.sort_values(
     ascending=False
 ).head(3)
 
+if page == "Overview":
+    st.header("📊 Market Overview")
 
+elif page == "Segments":
+    st.header("👥 Segment Analysis")
+
+elif page == "Strategy":
+    st.header("🎯 Target & Strategy")
 
 # -----------------------
 # KPIs
