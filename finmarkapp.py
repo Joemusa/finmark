@@ -68,6 +68,11 @@ age_group = st.sidebar.multiselect(
     df['Age_Group'].dropna().unique()
 )
 
+income_group = st.sidebar.multiselect(
+    "Select Income Group",
+    df['Income_Group'].dropna().unique()
+)
+
 # -----------------------
 # APPLY FILTERS
 # -----------------------
@@ -78,6 +83,11 @@ if gender:
     
 if age_group:
     filtered_df = filtered_df[filtered_df['Age_Group'].isin(age_group)]
+
+if income_group:
+    filtered_df = filtered_df[
+        filtered_df['Income_Group'].isin(income_group)
+    ]
 
 # -----------------------
 # KPIs
@@ -207,5 +217,76 @@ st.success(f"""
 Top Opportunity Age Group: {top_age['Age_Group']}
 
 👉 Insurance gap: {top_age['Insurance_Gap']*100:.1f}%
+
 👉 This group is financially active but underserved
+""")
+
+#==============================#
+# INCOME#
+#==============================#
+
+df['Income'] = pd.to_numeric(df['D3_1'], errors='coerce')
+
+df['Income'] = df['Income'].replace({0: None})
+
+df['Income_Group'] = pd.cut(
+    df['Income'],
+    bins=[0, 5000, 15000, 30000, 60000, 200000],
+    labels=[
+        'Low Income',
+        'Lower-Middle',
+        'Middle',
+        'Upper-Middle',
+        'High Income'
+    ]
+)
+gap_by_income = filtered_df.groupby('Income_Group')['Insurance_Gap'].mean().reset_index()
+
+# Sort properly
+gap_by_income['Income_Group'] = pd.Categorical(
+    gap_by_income['Income_Group'],
+    categories=[
+        'Low Income',
+        'Lower-Middle',
+        'Middle',
+        'Upper-Middle',
+        'High Income'
+    ],
+    ordered=True
+)
+
+gap_by_income = gap_by_income.sort_values('Income_Group')
+
+fig_income = px.bar(
+    gap_by_income,
+    x='Income_Group',
+    y='Insurance_Gap',
+    text='Insurance_Gap',
+    color_discrete_sequence=['#9467bd'],
+    title="Insurance Gap by Income Group"
+)
+
+fig_income.update_traces(
+    texttemplate='%{text:.1%}',
+    textposition='outside'
+)
+
+fig_income.update_layout(
+    height=300,
+    yaxis=dict(showgrid=False, title=""),
+    xaxis=dict(title="")
+)
+
+st.plotly_chart(fig_income, use_container_width=True)
+
+top_income = gap_by_income.sort_values(
+    by='Insurance_Gap',
+    ascending=False
+).iloc[0]
+
+st.success(f"""
+Top Opportunity Income Segment: {top_income['Income_Group']}
+
+👉 Insurance gap: {top_income['Insurance_Gap']*100:.1f}%
+👉 Strong opportunity for targeted insurance products
 """)
