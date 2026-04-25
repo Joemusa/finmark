@@ -58,6 +58,7 @@ def load_data():
         (1 - df['Financial_Stress']) +
         df['Included']
     ) / 2
+
     df['Health_Group'] = pd.cut(
     df['Financial_Health'],
     bins=[0, 0.4, 0.7, 1],
