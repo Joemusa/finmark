@@ -57,6 +57,11 @@ gender = st.sidebar.multiselect(
     df['Gender'].dropna().unique()
 )
 
+ = st.sidebar.multiselect(
+    "Select Gender",
+    df['Gender'].dropna().unique()
+)
+
 # -----------------------
 # APPLY FILTERS
 # -----------------------
@@ -64,6 +69,9 @@ filtered_df = df.copy()
 
 if gender:
     filtered_df = filtered_df[filtered_df['Gender'].isin(gender)]
+
+if region:
+    filtered_df = filtered_df[filtered_df['Region'].isin(region)]
 
 # -----------------------
 # KPIs
@@ -152,3 +160,44 @@ into insurance customers.
 
 👉 Focus on segments where financial inclusion is high but insurance uptake is low.
 """)
+
+#===========================#
+# Age #
+#===========================#
+df['Age_Group'] = pd.cut(
+    df['c8c'],
+    bins=[0, 25, 35, 50, 65, 100],
+    labels=['18-25','26-35','36-50','51-65','65+']
+)
+
+age_group = st.sidebar.multiselect(
+    "Select Age Group",
+    df['Age_Group'].dropna().unique()
+)
+
+if age_group:
+    filtered_df = filtered_df[filtered_df['Age_Group'].isin(age_group)]
+
+gap_by_age = filtered_df.groupby('Age_Group')['Insurance_Gap'].mean().reset_index()
+
+fig_age = px.bar(
+    gap_by_age,
+    x='Age_Group',
+    y='Insurance_Gap',
+    text='Insurance_Gap',
+    color_discrete_sequence=['#2ca02c'],
+    title="Insurance Gap by Age Group"
+)
+
+fig_age.update_traces(
+    texttemplate='%{text:.1%}',
+    textposition='outside'
+)
+
+fig_age.update_layout(
+    height=300,
+    yaxis=dict(showgrid=False, title=""),
+    xaxis=dict(title="")
+)
+
+st.plotly_chart(fig_age, use_container_width=True)
