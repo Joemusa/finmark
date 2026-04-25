@@ -163,13 +163,6 @@ df['Age_Group'] = pd.cut(
     labels=['18-25','26-35','36-50','51-65','65+']
 )
 
-age_group = st.sidebar.multiselect(
-    "Select Age Group",
-    df['Age_Group'].dropna().unique()
-)
-
-if age_group:
-    filtered_df = filtered_df[filtered_df['Age_Group'].isin(age_group)]
 
 gap_by_age = filtered_df.groupby('Age_Group')['Insurance_Gap'].mean().reset_index()
 
