@@ -264,3 +264,15 @@ fig_health.update_layout(
 )
 
 st.plotly_chart(fig_health, use_container_width=True)
+
+top_health = gap_by_health.sort_values(
+    by='Insurance_Gap',
+    ascending=False
+).iloc[0]
+
+st.success(f"""
+Top Opportunity Segment: {top_health['Health_Group']}
+
+👉 Insurance gap: {top_health['Insurance_Gap']*100:.1f}%
+👉 Prioritize this segment for tailored insurance products
+""")
