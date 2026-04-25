@@ -90,7 +90,14 @@ health = st.sidebar.multiselect(
     df['Health_Group'].dropna().unique()
 )
 
+if st.sidebar.button("Reset Filters"):
+    st.experimental_rerun()
 
+st.download_button(
+    "Download Data",
+    filtered_df.to_csv(index=False),
+    file_name="filtered_data.csv"
+)
 
 # -----------------------
 # APPLY FILTERS
