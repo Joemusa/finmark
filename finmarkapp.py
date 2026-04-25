@@ -294,7 +294,7 @@ st.subheader("🎯 Top Target Segments")
 
 cols = st.columns(3)
 
-for i, (_, row) in enumerate(top_segments.iterrows()):
+for i, (_, row) in enumerate(top_segment.iterrows()):
     with cols[i]:
         st.metric(
             label=f"{row['Age_Group']} | {row['Health_Group']}",
