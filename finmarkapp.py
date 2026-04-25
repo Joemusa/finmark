@@ -57,11 +57,6 @@ gender = st.sidebar.multiselect(
     df['Gender'].dropna().unique()
 )
 
- = st.sidebar.multiselect(
-    "Select Gender",
-    df['Gender'].dropna().unique()
-)
-
 # -----------------------
 # APPLY FILTERS
 # -----------------------
