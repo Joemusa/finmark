@@ -90,8 +90,7 @@ health = st.sidebar.multiselect(
     df['Health_Group'].dropna().unique()
 )
 
-if st.sidebar.button("Reset Filters"):
-    st.experimental_rerun()
+
 
 st.download_button(
     "Download Data",
@@ -125,7 +124,8 @@ top_segment = combined.sort_values(
     ascending=False
 ).head(3)
 
-
+if st.sidebar.button("Reset Filters"):
+    st.experimental_rerun()
 
 # -----------------------
 # KPIs
