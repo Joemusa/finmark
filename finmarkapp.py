@@ -26,3 +26,9 @@ col1.metric("Market Size", f"{len(df):,}")
 col2.metric("Financial Inclusion", f"{included_pct:.1f}%")
 col3.metric("Insurance Penetration", f"{insured_pct:.1f}%")
 col4.metric("Insurance Gap", f"{gap_pct:.1f}%")
+
+st.subheader("Market Overview")
+
+chart_data = df[['Included','Insured','Insurance_Gap']].mean()
+
+st.bar_chart(chart_data)
