@@ -289,8 +289,8 @@ top_health = gap_by_health.sort_values(
 st.success(f"""
 Top Opportunity Segment: {top_health['Health_Group']}
 
-👉 Insurance gap: {top_health['Insurance_Gap']*100:.1f}%
-👉 Prioritize this segment for tailored insurance products
+'👉' Insurance gap: {top_health['Insurance_Gap']*100:.1f}%
+'👉' Prioritize this segment for tailored insurance products
 """)
 
 st.subheader("🎯 Top Target Segments")
