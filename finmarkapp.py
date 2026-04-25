@@ -105,6 +105,11 @@ if st.sidebar.button("Reset Filters"):
     st.session_state.clear()
     st.rerun()
 
+page = st.sidebar.radio(
+    "Navigation",
+    ["Overview", "Segments", "Strategy"]
+)
+
 # -----------------------
 # APPLY FILTERS
 # -----------------------
