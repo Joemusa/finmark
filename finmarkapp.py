@@ -138,12 +138,38 @@ top_segment = combined.sort_values(
 
 if page == "Overview":
     st.header("📊 Market Overview")
+    col1, col2, col3, col4 = st.columns(4)
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    col1.metric("Market Size", f"{len(filtered_df):,}")
+    col2.metric("Financial Inclusion", f"{included_pct*100:.1f}%")
+    col3.metric("Insurance Penetration", f"{insured_pct*100:.1f}%")
+    col4.metric("Insurance Gap", f"{gap_pct*100:.1f}%")
+
 
 elif page == "Segments":
     st.header("👥 Segment Analysis")
 
+    st.plotly_chart(fig_age, width="stretch")
+    st.plotly_chart(fig_health, width="stretch")
+
 elif page == "Strategy":
     st.header("🎯 Target & Strategy")
+    st.subheader("Top Target Segment")
+
+    gap_value = float(top_segment['Insurance_Gap'])
+
+    st.success(
+        f"""👉 Insurance Gap: {gap_value*100:.1f}%
+
+💡 This segment represents the highest opportunity.
+
+👉 Recommended Action:
+- Design affordable products
+- Use mobile channels
+"""
+    )
 
 # -----------------------
 # KPIs
@@ -158,6 +184,7 @@ col1.metric("Market Size", f"{len(filtered_df):,}")
 col2.metric("Financial Inclusion", f"{included_pct*100:.1f}%")
 col3.metric("Insurance Penetration", f"{insured_pct*100:.1f}%")
 col4.metric("Insurance Gap", f"{gap_pct*100:.1f}%")
+
 
 # -----------------------
 # CHARTS (COMPACT + CLEAN)
