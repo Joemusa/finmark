@@ -75,6 +75,15 @@ df = load_data()
 # -----------------------
 st.sidebar.header("Filters")
 
+if "gender" not in st.session_state:
+    st.session_state["gender"] = []
+
+if "age_group" not in st.session_state:
+    st.session_state["age_group"] = []
+
+if "health" not in st.session_state:
+    st.session_state["health"] = []
+
 gender = st.sidebar.multiselect(
     "Select Gender",
     df['Gender'].dropna().unique(),
