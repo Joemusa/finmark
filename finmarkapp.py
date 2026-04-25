@@ -15,10 +15,10 @@ st.title("📊 Financial Inclusion Dashboard")
 def load_data():
     df = pd.read_csv("clean_data.csv")
 
-    # -------- CLEAN / TRANSFORM --------
+    # Clean column names
     df.columns = df.columns.str.strip()
 
-    # Convert Yes/No values
+    # Convert Yes/No (1/2 → 1/0)
     df['BANKED'] = df['BANKED'].replace({2: 0})
     df['MM'] = df['MM'].replace({2: 0})
     df['INSURANCE'] = df['INSURANCE'].replace({2: 0})
@@ -68,19 +68,19 @@ if gender:
 # -----------------------
 # KPIs
 # -----------------------
-included_pct = filtered_df['Included'].mean() * 100
-insured_pct = filtered_df['Insured'].mean() * 100
-gap_pct = filtered_df['Insurance_Gap'].mean() * 100
+included_pct = filtered_df['Included'].mean()
+insured_pct = filtered_df['Insured'].mean()
+gap_pct = filtered_df['Insurance_Gap'].mean()
 
 col1, col2, col3, col4 = st.columns(4)
 
 col1.metric("Market Size", f"{len(filtered_df):,}")
-col2.metric("Financial Inclusion", f"{included_pct:.1f}%")
-col3.metric("Insurance Penetration", f"{insured_pct:.1f}%")
-col4.metric("Insurance Gap", f"{gap_pct:.1f}%")
+col2.metric("Financial Inclusion", f"{included_pct*100:.1f}%")
+col3.metric("Insurance Penetration", f"{insured_pct*100:.1f}%")
+col4.metric("Insurance Gap", f"{gap_pct*100:.1f}%")
 
 # -----------------------
-# CHARTS (COMPACT)
+# CHARTS (COMPACT + CLEAN)
 # -----------------------
 colA, colB = st.columns(2)
 
@@ -92,32 +92,45 @@ fig1 = px.bar(
     chart_data,
     x='Metric',
     y='Value',
-    text='Value',  # 👈 adds labels
+    text='Value',
+    color_discrete_sequence=['#1f77b4'],
     title="Market Overview"
 )
 
 fig1.update_traces(
-    texttemplate='%{text:.1%}',  # format as %
+    texttemplate='%{text:.1%}',
     textposition='outside'
 )
 
 fig1.update_layout(
     height=300,
     margin=dict(l=20, r=20, t=40, b=20),
-    yaxis=dict(
-        showgrid=False,   # ❌ remove horizontal lines
-        title=""
-    ),
-    xaxis=dict(
-        title=""
-    )
+    yaxis=dict(showgrid=False, title=""),
+    xaxis=dict(title="")
 )
 
-st.plotly_chart(fig1, use_container_width=True)
+# 📊 Insurance Gap by Gender
+gap_by_gender = filtered_df.groupby('Gender')['Insurance_Gap'].mean().reset_index()
+
+fig2 = px.bar(
+    gap_by_gender,
+    x='Gender',
+    y='Insurance_Gap',
+    text='Insurance_Gap',
+    color_discrete_sequence=['#ff7f0e'],
+    title="Insurance Gap by Gender"
+)
+
+fig2.update_traces(
+    texttemplate='%{text:.1%}',
+    textposition='outside'
+)
 
 fig2.update_layout(
     height=300,
-    margin=dict(l=20, r=20, t=40, b=20)
+    margin=dict(l=20, r=20, t=40, b=20),
+    yaxis=dict(showgrid=False, title=""),
+    xaxis=dict(title="")
 )
 
 with colA:
@@ -132,10 +145,10 @@ with colB:
 st.subheader("Key Insight")
 
 st.info(f"""
-{gap_pct:.1f}% of financially active individuals are uninsured.
+{gap_pct*100:.1f}% of financially active individuals are uninsured.
 
-👉 This represents a strong opportunity to target existing financial users
-with insurance products.
+👉 This represents a strong opportunity to convert existing financial users
+into insurance customers.
 
 👉 Focus on segments where financial inclusion is high but insurance uptake is low.
 """)
