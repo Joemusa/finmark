@@ -69,7 +69,7 @@ def load_data():
     )['Insurance_Gap'].mean().reset_index()
 
     combined = combined.dropna()
-        top_segment = combined.sort_values(
+    top_segment = combined.sort_values(
         by='Insurance_Gap',
         ascending=False
     ).iloc[0]
