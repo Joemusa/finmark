@@ -43,7 +43,7 @@ into insurance customers.
 """)
 gender = st.sidebar.multiselect(
     "Select Gender",
-    df['c9'].unique()
+    df['Gender'].unique()
 )
 
 if gender:
