@@ -57,6 +57,11 @@ gender = st.sidebar.multiselect(
     df['Gender'].dropna().unique()
 )
 
+age_group = st.sidebar.multiselect(
+    "Select Age Group",
+    df['Age_Group'].dropna().unique()
+)
+
 # -----------------------
 # APPLY FILTERS
 # -----------------------
@@ -64,7 +69,9 @@ filtered_df = df.copy()
 
 if gender:
     filtered_df = filtered_df[filtered_df['Gender'].isin(gender)]
-
+    
+if age_group:
+    filtered_df = filtered_df[filtered_df['Age_Group'].isin(age_group)]
 
 # -----------------------
 # KPIs
