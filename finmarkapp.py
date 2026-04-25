@@ -49,20 +49,19 @@ def load_data():
     labels=['18-25','26-35','36-50','51-65','65+']
     )
 
-    df['Income'] = pd.to_numeric(df['D3_1'], errors='coerce')
+   df['Financial_Stress'] = (
+       (df['e_1_1'] == 1) | 
+       (df['e_1_2'] == 1)
+   ).astype(int)
 
-    df['Income'] = df['Income'].replace({0: None})
-
-    df['Income_Group'] = pd.cut(
-        df['Income'],
-        bins=[0, 1000, 2000, 3000, 4000, 5000],
-        labels=[
-            'Low Income',
-            'Lower-Middle',
-            'Middle',
-            'Upper-Middle',
-            'High Income'
-        ]
+    df['Financial_Health'] = (
+        (1 - df['Financial_Stress']) +
+        df['Included']
+    ) / 2
+    df['Health_Group'] = pd.cut(
+    df['Financial_Health'],
+    bins=[0, 0.4, 0.7, 1],
+    labels=['Vulnerable', 'Moderate', 'Healthy']
     )
 
     return df
@@ -84,10 +83,12 @@ age_group = st.sidebar.multiselect(
     df['Age_Group'].dropna().unique()
 )
 
-income_group = st.sidebar.multiselect(
-    "Select Income Group",
-    df['Income_Group'].dropna().unique()
+health = st.sidebar.multiselect(
+    "Financial Health",
+    df['Health_Group'].dropna().unique()
 )
+
+
 
 # -----------------------
 # APPLY FILTERS
@@ -100,10 +101,10 @@ if gender:
 if age_group:
     filtered_df = filtered_df[filtered_df['Age_Group'].isin(age_group)]
 
-if income_group:
-    filtered_df = filtered_df[
-        filtered_df['Income_Group'].isin(income_group)
-    ]
+if health:
+    filtered_df = filtered_df[filtered_df['Health_Group'].isin(health)]
+
+
 
 # -----------------------
 # KPIs
@@ -238,71 +239,27 @@ Top Opportunity Age Group: {top_age['Age_Group']}
 """)
 
 #==============================#
-# INCOME#
+# FINANCIAL STRESS #
 #==============================#
 
-df['Income'] = pd.to_numeric(df['D3_1'], errors='coerce')
+gap_by_health = filtered_df.groupby('Health_Group')['Insurance_Gap'].mean().reset_index()
 
-df['Income'] = df['Income'].replace({0: None})
-
-df['Income_Group'] = pd.cut(
-    df['Income'],
-    bins=[0, 5000, 15000, 30000, 60000, 200000],
-    labels=[
-        'Low Income',
-        'Lower-Middle',
-        'Middle',
-        'Upper-Middle',
-        'High Income'
-    ]
-)
-gap_by_income = filtered_df.groupby('Income_Group')['Insurance_Gap'].mean().reset_index()
-
-# Sort properly
-gap_by_income['Income_Group'] = pd.Categorical(
-    gap_by_income['Income_Group'],
-    categories=[
-        'Low Income',
-        'Lower-Middle',
-        'Middle',
-        'Upper-Middle',
-        'High Income'
-    ],
-    ordered=True
-)
-
-gap_by_income = gap_by_income.sort_values('Income_Group')
-
-fig_income = px.bar(
-    gap_by_income,
-    x='Income_Group',
+fig_health = px.bar(
+    gap_by_health,
+    x='Health_Group',
     y='Insurance_Gap',
     text='Insurance_Gap',
-    color_discrete_sequence=['#9467bd'],
-    title="Insurance Gap by Income Group"
+    title="Insurance Gap by Financial Health"
 )
 
-fig_income.update_traces(
+fig_health.update_traces(
     texttemplate='%{text:.1%}',
     textposition='outside'
 )
 
-fig_income.update_layout(
+fig_health.update_layout(
     height=300,
-    yaxis=dict(showgrid=False, title=""),
-    xaxis=dict(title="")
+    yaxis=dict(showgrid=False),
 )
 
-st.plotly_chart(fig_income, use_container_width=True)
-
-top_income = gap_by_income.sort_values(
-    by='Insurance_Gap',
-    ascending=False
-).iloc[0]
-
-st.success(f"""
-Top Opportunity Income Segment: {top_income['Income_Group']}
-
-👉 Insurance gap: {top_income['Insurance_Gap']*100:.1f}%
-👉 Strong opportunity for targeted insurance products
-""")
+st.plotly_chart(fig_health, use_container_width=True)
