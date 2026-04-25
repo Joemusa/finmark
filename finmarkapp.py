@@ -51,7 +51,7 @@ def load_data():
 
     df['Financial_Stress'] = (
         (df['e_1_1'] == 1) |
-        (df['e_1_2'] == 1)
+        (df['e_1_1new'] == 1)
     ).astype(int)
 
     df['Financial_Health'] = (
