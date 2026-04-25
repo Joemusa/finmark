@@ -313,7 +313,8 @@ st.success(f"""👉 Insurance Gap: {top_segment['Insurance_Gap']*100:.1f}%
 - Design affordable products
 - Use simple onboarding
 - Leverage mobile channels
-""")
+"""
+)
 
 fig_combined = px.bar(
     combined,
