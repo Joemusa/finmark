@@ -106,9 +106,6 @@ if age_group:
 if health:
     filtered_df = filtered_df[filtered_df['Health_Group'].isin(health)]
 
-combined = filtered_df.groupby(
-        ['Age_Group','Health_Group']
-    )['Insurance_Gap'].mean().reset_index()
 
 combined = filtered_df.groupby(
     ['Age_Group','Health_Group']
@@ -306,7 +303,7 @@ for i, (_, row) in enumerate(top_segments.iterrows()):
         )
 
 st.success(
-    f"""👉 Insurance Gap: {top_segment['Insurance_Gap']*100:.1f}% 
+    f"""👉 Insurance Gap: {top_segments['Insurance_Gap']*100:.1f}% 
 
 💡 This segment represents the highest opportunity for insurance expansion.
 
