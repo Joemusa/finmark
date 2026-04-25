@@ -301,7 +301,7 @@ for i, (_, row) in enumerate(top_segment.iterrows()):
             value=f"{row['Insurance_Gap']*100:.1f}%",
             delta="Opportunity"
         )
-if not top_segments.empty:
+if not top_segment.empty:
     gap_value = top_segment.iloc[0]['Insurance_Gap']
     
     # Ensure it's a number
