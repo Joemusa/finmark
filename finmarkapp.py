@@ -11,6 +11,11 @@ def load_data():
 
 df = load_data()
 
+df['Insured'] = df['INSURANCE'].replace({2: 0})
+df['Insurance_Gap'] = (
+    (df['Included'] == 1) & (df['Insured'] == 0)
+).astype(int)
+
 included_pct = df['Included'].mean() * 100
 insured_pct = df['Insured'].mean() * 100
 gap_pct = df['Insurance_Gap'].mean() * 100
