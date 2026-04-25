@@ -301,9 +301,9 @@ for i, (_, row) in enumerate(top_segment.iterrows()):
             value=f"{row['Insurance_Gap']*100:.1f}%",
             delta="Opportunity"
         )
-
+gap_value = float(top_segment['Insurance_Gap'])
 st.success(
-    f"""👉 Insurance Gap: {top_segment['Insurance_Gap']*100:.1f}% 
+    f"""👉 Insurance Gap: {gap_value*100:.1f}% 
 
 💡 This segment represents the highest opportunity for insurance expansion.
 
