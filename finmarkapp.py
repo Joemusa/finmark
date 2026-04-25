@@ -110,11 +110,16 @@ combined = filtered_df.groupby(
         ['Age_Group','Health_Group']
     )['Insurance_Gap'].mean().reset_index()
 
+combined = filtered_df.groupby(
+    ['Age_Group','Health_Group']
+)['Insurance_Gap'].mean().reset_index()
+
 combined = combined.dropna()
-top_segment = combined.sort_values(
+
+top_segments = combined.sort_values(
     by='Insurance_Gap',
     ascending=False
-).iloc[0]
+).head(3)
 
 
 
@@ -288,11 +293,17 @@ Top Opportunity Segment: {top_health['Health_Group']}
 👉 Prioritize this segment for tailored insurance products
 """)
 
-st.subheader("🎯 Top Target Segment")
+st.subheader("🎯 Top Target Segments")
 
-st.success(f"""
-**Age Group:** {top_segment['Age_Group']}  
-**Financial Health:** {top_segment['Health_Group']}  
+cols = st.columns(3)
+
+for i, (_, row) in enumerate(top_segments.iterrows()):
+    with cols[i]:
+        st.metric(
+            label=f"{row['Age_Group']} | {row['Health_Group']}",
+            value=f"{row['Insurance_Gap']*100:.1f}%",
+            delta="Opportunity"
+        )
 
 👉 Insurance Gap: {top_segment['Insurance_Gap']*100:.1f}%  
 
