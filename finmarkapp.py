@@ -110,11 +110,11 @@ combined = filtered_df.groupby(
         ['Age_Group','Health_Group']
     )['Insurance_Gap'].mean().reset_index()
 
-    combined = combined.dropna()
-    top_segment = combined.sort_values(
-        by='Insurance_Gap',
-        ascending=False
-    ).iloc[0]
+combined = combined.dropna()
+top_segment = combined.sort_values(
+    by='Insurance_Gap',
+    ascending=False
+).iloc[0]
 
 
 
