@@ -77,17 +77,20 @@ st.sidebar.header("Filters")
 
 gender = st.sidebar.multiselect(
     "Select Gender",
-    df['Gender'].dropna().unique()
+    df['Gender'].dropna().unique(),
+    key="gender"
 )
 
 age_group = st.sidebar.multiselect(
     "Select Age Group",
-    df['Age_Group'].dropna().unique()
+    df['Age_Group'].dropna().unique(),
+    key="age_group"
 )
 
 health = st.sidebar.multiselect(
     "Financial Health",
-    df['Health_Group'].dropna().unique()
+    df['Health_Group'].dropna().unique(),
+    key="health"
 )
 if st.sidebar.button("Reset Filters"):
     st.session_state.clear()
