@@ -92,23 +92,28 @@ fig1 = px.bar(
     chart_data,
     x='Metric',
     y='Value',
+    text='Value',  # 👈 adds labels
     title="Market Overview"
+)
+
+fig1.update_traces(
+    texttemplate='%{text:.1%}',  # format as %
+    textposition='outside'
 )
 
 fig1.update_layout(
     height=300,
-    margin=dict(l=20, r=20, t=40, b=20)
+    margin=dict(l=20, r=20, t=40, b=20),
+    yaxis=dict(
+        showgrid=False,   # ❌ remove horizontal lines
+        title=""
+    ),
+    xaxis=dict(
+        title=""
+    )
 )
 
-# 📊 Insurance Gap by Gender
-gap_by_gender = filtered_df.groupby('Gender')['Insurance_Gap'].mean().reset_index()
-
-fig2 = px.bar(
-    gap_by_gender,
-    x='Gender',
-    y='Insurance_Gap',
-    title="Insurance Gap by Gender"
-)
+st.plotly_chart(fig1, use_container_width=True)
 
 fig2.update_layout(
     height=300,
