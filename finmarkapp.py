@@ -55,7 +55,7 @@ def load_data():
 
     df['Income_Group'] = pd.cut(
         df['Income'],
-        bins=[0, 5000, 15000, 30000, 60000, 200000],
+        bins=[0, 1000, 2000, 3000, 4000, 5000],
         labels=[
             'Low Income',
             'Lower-Middle',
