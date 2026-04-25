@@ -305,7 +305,7 @@ for i, (_, row) in enumerate(top_segments.iterrows()):
             delta="Opportunity"
         )
 
-👉 Insurance Gap: {top_segment['Insurance_Gap']*100:.1f}%  
+st.success(f"""👉 Insurance Gap: {top_segment['Insurance_Gap']*100:.1f}% """) 
 
 💡 This segment represents the highest opportunity for insurance expansion.
 
