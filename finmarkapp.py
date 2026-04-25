@@ -89,7 +89,9 @@ health = st.sidebar.multiselect(
     "Financial Health",
     df['Health_Group'].dropna().unique()
 )
-
+if st.sidebar.button("Reset Filters"):
+    st.session_state.clear()
+    st.experimental_rerun()
 
 # -----------------------
 # APPLY FILTERS
