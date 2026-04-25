@@ -41,3 +41,10 @@ st.info(f"""
 👉 This represents a strong opportunity to convert existing financial users
 into insurance customers.
 """)
+gender = st.sidebar.multiselect(
+    "Select Gender",
+    df['c9'].unique()
+)
+
+if gender:
+    df = df[df['c9'].isin(gender)]
