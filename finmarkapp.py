@@ -302,7 +302,7 @@ for i, (_, row) in enumerate(top_segment.iterrows()):
             delta="Opportunity"
         )
 if not top_segments.empty:
-    gap_value = top_segments.iloc[0]['Insurance_Gap']
+    gap_value = top_segment.iloc[0]['Insurance_Gap']
     
     # Ensure it's a number
     gap_value = float(gap_value)
