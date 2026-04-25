@@ -200,3 +200,12 @@ fig_age.update_layout(
 )
 
 st.plotly_chart(fig_age, use_container_width=True)
+
+top_age = gap_by_age.sort_values(by='Insurance_Gap', ascending=False).iloc[0]
+
+st.success(f"""
+Top Opportunity Age Group: {top_age['Age_Group']}
+
+👉 Insurance gap: {top_age['Insurance_Gap']*100:.1f}%
+👉 This group is financially active but underserved
+""")
