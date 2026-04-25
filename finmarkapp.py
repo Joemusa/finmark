@@ -91,13 +91,6 @@ health = st.sidebar.multiselect(
 )
 
 
-
-st.download_button(
-    "Download Data",
-    filtered_df.to_csv(index=False),
-    file_name="filtered_data.csv"
-)
-
 # -----------------------
 # APPLY FILTERS
 # -----------------------
