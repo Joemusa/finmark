@@ -49,6 +49,22 @@ def load_data():
     labels=['18-25','26-35','36-50','51-65','65+']
     )
 
+    df['Income'] = pd.to_numeric(df['D3_1'], errors='coerce')
+
+    df['Income'] = df['Income'].replace({0: None})
+
+    df['Income_Group'] = pd.cut(
+        df['Income'],
+        bins=[0, 5000, 15000, 30000, 60000, 200000],
+        labels=[
+            'Low Income',
+            'Lower-Middle',
+            'Middle',
+            'Upper-Middle',
+            'High Income'
+        ]
+    )
+
     return df
 
 df = load_data()
