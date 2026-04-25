@@ -49,10 +49,10 @@ def load_data():
     labels=['18-25','26-35','36-50','51-65','65+']
     )
 
-df['Financial_Stress'] = (
-        (df['e_1_1'] == 1) |
-        (df['e_1_2'] == 1)
-    ).astype(int)
+    df['Financial_Stress'] = (
+            (df['e_1_1'] == 1) |
+            (df['e_1_2'] == 1)
+        ).astype(int)
 
     df['Financial_Health'] = (
         (1 - df['Financial_Stress']) +
