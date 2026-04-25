@@ -65,8 +65,6 @@ filtered_df = df.copy()
 if gender:
     filtered_df = filtered_df[filtered_df['Gender'].isin(gender)]
 
-if region:
-    filtered_df = filtered_df[filtered_df['Region'].isin(region)]
 
 # -----------------------
 # KPIs
