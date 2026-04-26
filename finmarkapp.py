@@ -7,18 +7,7 @@ import plotly.express as px
 # -----------------------
 st.set_page_config(layout="wide")
 #st.image("FinMarkimages.png", width=200)
-#st.title("📊 Financial Inclusion Dashboard")
-
-st.set_page_config(page_title="Dashboard", page_icon="logo.png")
-
-col1, col2 = st.columns([1,4])
-
-with col1:
-    st.image("FinMarkimages.png", width=100)
-
-with col2:
-    st.title("Financial Inclusion Insights")
-    st.caption("Executive Dashboard")
+st.title("📊 Financial Inclusion Dashboard")
 
 # -----------------------
 # LOAD DATA
