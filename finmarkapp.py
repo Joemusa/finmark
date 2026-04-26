@@ -6,7 +6,7 @@ import plotly.express as px
 # PAGE SETUP
 # -----------------------
 st.set_page_config(layout="wide")
-st.image("logo.png", width=200)
+st.image("FinMarkimages.png", width=200)
 st.title("📊 Financial Inclusion Dashboard")
 
 # -----------------------
