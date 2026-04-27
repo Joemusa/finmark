@@ -140,7 +140,7 @@ top_segment = combined.sort_values(
 # -----------------------
 # KPIs
 # -----------------------
-included_pct = np.average(filtered_df['Included'], weights=filtered_df['population_wt']
+included_pct = np.average(filtered_df['Included'], weights=filtered_df['population_wt'])
 insured_pct = filtered_df['Insured'].mean()
 gap_pct = filtered_df['Insurance_Gap'].mean()
 
