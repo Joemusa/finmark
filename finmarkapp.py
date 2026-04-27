@@ -94,13 +94,20 @@ df['population_wt'] = (
     df['population_wt']
     .astype(str)
     .str.replace(',', '')
+    .str.strip()
 )
+
+df['population_wt'] = pd.to_numeric(df['population_wt'], errors='coerce')
 
 df['population_wt'] = pd.to_numeric(
     df['population_wt'],
     errors='coerce'
 )
-df = df[df['population_wt'].notna()]
+valid = filtered_df[
+    (filtered_df['population_wt'].notna()) &
+    (filtered_df['population_wt'] > 0) &
+    (filtered_df['Included'].notna())
+]
 
 # -----------------------
 # SIDEBAR FILTERS
