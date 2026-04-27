@@ -143,7 +143,7 @@ gap_pct = filtered_df['Insurance_Gap'].mean()
 
 col1, col2, col3, col4 = st.columns(4)
 
-col1.metric("Market Size", f"{len(filtered_df):,}")
+col1.metric("Total Respondents", f"{len(filtered_df):,}")
 col2.metric("Financial Inclusion", f"{included_pct*100:.1f}%")
 col3.metric("Insurance Penetration", f"{insured_pct*100:.1f}%")
 col4.metric("Insurance Gap", f"{gap_pct*100:.1f}%")
@@ -154,7 +154,7 @@ col4.metric("Insurance Gap", f"{gap_pct*100:.1f}%")
 # -----------------------
 colA, colB = st.columns(2)
 
-# 📊 Market Overview
+# 📊 Popolation Overview
 chart_data = filtered_df[['Included','Insured','Insurance_Gap']].mean().reset_index()
 chart_data.columns = ['Metric', 'Value']
 
@@ -164,7 +164,7 @@ fig1 = px.bar(
     y='Value',
     text='Value',
     color_discrete_sequence=['#1f77b4'],
-    title="Market Overview"
+    title="Population Overview"
 )
 
 fig1.update_traces(
