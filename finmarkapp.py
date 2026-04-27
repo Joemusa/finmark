@@ -12,7 +12,7 @@ st.set_page_config(layout="wide")
 #st.image("FinMarkimages.png", width=200)
 st.title("📊 Financial Inclusion Dashboard")
 
-# -----------------------
+# -----------------------F
 # LOAD DATA
 # -----------------------
 @st.cache_data
@@ -208,7 +208,7 @@ col1, col2, col3, col4 = st.columns(4)
 total_population = filtered_df['population_wt'].sum()
 
 col1.metric(
-    "Total Market",
+    "Population",
     f"{total_population/1_000_000:.1f} Million"
 )
 col2.metric("Financial Inclusion", f"{included_pct*100:.1f}%")
