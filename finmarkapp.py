@@ -86,7 +86,7 @@ for col in numeric_cols:
     if col in df.columns:
         df[col] = pd.to_numeric(df[col], errors='coerce')
 
-df['population_wt'] = df['population_wt'] / 1_000_000_000
+df['population_wt'] = df['population_wt'] / 1_000_000_000_0
 
 df['population_wt'] = pd.to_numeric(df['population_wt'], errors='coerce')
 
