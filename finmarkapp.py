@@ -175,12 +175,34 @@ top_segment = combined.sort_values(
 # -----------------------
 # KPIs
 # -----------------------
+
+valid = filtered_df[
+    (filtered_df['population_wt'].notna()) &
+    (filtered_df['population_wt'] > 0)
+]
+
+included_pct = np.average(
+    valid['Included'],
+    weights=valid['population_wt']
+)
+
+insured_pct = np.average(
+    valid['Insured'],
+    weights=valid['population_wt']
+)
+
+gap_pct = np.average(
+    valid['Insurance_Gap'],
+    weights=valid['population_wt']
+)
+
 included_pct = np.average(
     filtered_df['Included'],
     weights=filtered_df['population_wt']
 )
+
 gap_pct = np.average(valid['Insurance_Gap'], weights=valid['population_wt'])
-gap_pct = np.average(valid['Insurance_Gap'], weights=valid['population_wt'])
+
 col1, col2, col3, col4 = st.columns(4)
 
 total_population = filtered_df['population_wt'].sum()
