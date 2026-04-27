@@ -154,10 +154,6 @@ if valid['population_wt'].sum() > 0:
 else:
     included_pct = 0
 
-st.write("Weight sum:", filtered_df['population_wt'].sum())
-st.write(filtered_df['population_wt'].head())
-st.write(filtered_df['population_wt'].describe())
-
 if gender:
     filtered_df = filtered_df[filtered_df['Gender'].isin(gender)]
     
@@ -195,7 +191,7 @@ col1, col2, col3, col4 = st.columns(4)
 
 total_population = filtered_df['population_wt'].sum()
 
-col1.metric("Total Respondents", f"{int(total_population):,}")
+col1.metric("Total Respondents", f"{int(total_population):,}M")
 col2.metric("Financial Inclusion", f"{included_pct*100:.1f}%")
 col3.metric("Insurance Penetration", f"{insured_pct*100:.1f}%")
 col4.metric("Insurance Gap", f"{gap_pct*100:.1f}%")
