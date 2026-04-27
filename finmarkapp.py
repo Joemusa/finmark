@@ -188,7 +188,7 @@ total_population = filtered_df['population_wt'].sum()
 
 col1.metric(
     "Total Market",
-    f"{total_population/1_000_000:.0f} Million"
+    f"{total_population/1_000_000:.1f} Million"
 )
 col2.metric("Financial Inclusion", f"{included_pct*100:.1f}%")
 col3.metric("Insurance Penetration", f"{insured_pct*100:.1f}%")
