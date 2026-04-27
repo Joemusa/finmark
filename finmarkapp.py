@@ -191,7 +191,10 @@ col1, col2, col3, col4 = st.columns(4)
 
 total_population = filtered_df['population_wt'].sum()
 
-col1.metric("Total Respondents (Millions)", f"{total_population/1000000:.0f}M")
+col1.metric(
+    "Total Market",
+    f"{total_population/1_000_000:.0f} Million"
+)
 col2.metric("Financial Inclusion", f"{included_pct*100:.1f}%")
 col3.metric("Insurance Penetration", f"{insured_pct*100:.1f}%")
 col4.metric("Insurance Gap", f"{gap_pct*100:.1f}%")
