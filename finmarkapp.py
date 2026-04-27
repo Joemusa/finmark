@@ -179,9 +179,8 @@ included_pct = np.average(
     filtered_df['Included'],
     weights=filtered_df['population_wt']
 )
-insured_pct = filtered_df['Insured'].mean()
-gap_pct = filtered_df['Insurance_Gap'].mean()
-
+gap_pct = np.average(valid['Insurance_Gap'], weights=valid['population_wt'])
+gap_pct = np.average(valid['Insurance_Gap'], weights=valid['population_wt'])
 col1, col2, col3, col4 = st.columns(4)
 
 total_population = filtered_df['population_wt'].sum()
