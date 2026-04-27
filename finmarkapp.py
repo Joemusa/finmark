@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import numpy as np
+
+np.average(df['Included'], weights=df['population_wt'])
 
 # -----------------------
 # PAGE SETUP
@@ -137,7 +140,7 @@ top_segment = combined.sort_values(
 # -----------------------
 # KPIs
 # -----------------------
-included_pct = filtered_df['Included'].mean()
+included_pct = np.average(filtered_df['Included'], weights=filtered_df['population_wt']
 insured_pct = filtered_df['Insured'].mean()
 gap_pct = filtered_df['Insurance_Gap'].mean()
 
