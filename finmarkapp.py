@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 import numpy as np
 
-np.average(df['Included'], weights=df['population_wt'])
+#np.average(df['Included'], weights=df['population_wt'])
 
 # -----------------------
 # PAGE SETUP
