@@ -90,6 +90,18 @@ for col in numeric_cols:
     if col in df.columns:
         df[col] = pd.to_numeric(df[col], errors='coerce')
 
+df['population_wt'] = (
+    df['population_wt']
+    .astype(str)
+    .str.replace(',', '')
+)
+
+df['population_wt'] = pd.to_numeric(
+    df['population_wt'],
+    errors='coerce'
+)
+df = df[df['population_wt'].notna()]
+
 # -----------------------
 # SIDEBAR FILTERS
 # -----------------------
