@@ -80,6 +80,16 @@ def load_data():
 
 df = load_data()
 
+numeric_cols = [
+    'BANKED', 'MM', 'INSURANCE',
+    'Included', 'Insured', 'Insurance_Gap',
+    'population_wt'
+]
+
+for col in numeric_cols:
+    if col in df.columns:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
+
 # -----------------------
 # SIDEBAR FILTERS
 # -----------------------
