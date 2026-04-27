@@ -165,7 +165,9 @@ gap_pct = filtered_df['Insurance_Gap'].mean()
 
 col1, col2, col3, col4 = st.columns(4)
 
-col1.metric("Total Respondents", f"{len(filtered_df):,}")
+total_population = filtered_df['population_wt'].sum()
+
+col1.metric("Total Respondents", f"{int(total_population):,}")
 col2.metric("Financial Inclusion", f"{included_pct*100:.1f}%")
 col3.metric("Insurance Penetration", f"{insured_pct*100:.1f}%")
 col4.metric("Insurance Gap", f"{gap_pct*100:.1f}%")
