@@ -17,7 +17,7 @@ st.title("📊 Financial Inclusion Dashboard")
 # -----------------------
 @st.cache_data
 def load_data():
-    df = pd.read_csv("clean_data.csv")
+    df = pd.read_csv("FinScope Tanzania 2023_Individual Main Data_FINAL")
 
     # Clean column names
     df.columns = df.columns.str.strip()
