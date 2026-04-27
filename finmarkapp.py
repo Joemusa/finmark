@@ -108,7 +108,17 @@ valid = filtered_df[
     (filtered_df['population_wt'] > 0) &
     (filtered_df['Included'].notna())
 ]
+if valid['population_wt'].sum() > 0:
+    included_pct = np.average(
+        valid['Included'],
+        weights=valid['population_wt']
+    )
+else:
+    included_pct = 0
 
+st.write("Weight sum:", filtered_df['population_wt'].sum())
+st.write(filtered_df['population_wt'].head())
+st.write(filtered_df['population_wt'].describe())
 # -----------------------
 # SIDEBAR FILTERS
 # -----------------------
