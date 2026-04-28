@@ -367,6 +367,7 @@ st.success(f"""
 Top Opportunity Segment: {top_health['Health_Group']}
 
 '👉' Insurance gap: {top_health['Insurance_Gap']*100:.1f}%
+
 '👉' Prioritize this segment for tailored insurance products
 """)
 
