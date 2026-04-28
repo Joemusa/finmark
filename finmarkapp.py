@@ -95,6 +95,8 @@ df['population_wt'] = pd.to_numeric(
     errors='coerce'
 )
 
+st.write("Columns:", df.columns)
+
 df.columns = df.columns.str.strip().str.replace(".", "_")
 def classify_income(source):
     if pd.isna(source):
@@ -153,14 +155,7 @@ health = st.sidebar.multiselect(
     df['Health_Group'].dropna().unique(),
     key="health"
 )
-if st.sidebar.button("Reset Filters"):
-    st.session_state.clear()
-    st.rerun()
 
-income_filter = st.multiselect(
-    "Select Income Type",
-    options=sorted(df["Income_Group"].dropna().unique())
-)
 
 
 
@@ -202,6 +197,11 @@ top_segment = combined.sort_values(
     by='Insurance_Gap',
     ascending=False
 ).head(3)
+
+income_filter = st.multiselect(
+    "Select Income Type",
+    options=sorted(df["Income_Group"].dropna().unique())
+)
 
 if income_filter:
     df = df[df["Income_Group"].isin(income_filter)]
