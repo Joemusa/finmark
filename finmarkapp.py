@@ -198,10 +198,6 @@ top_segment = combined.sort_values(
     ascending=False
 ).head(3)
 
-income_filter = st.multiselect(
-    "Select Income Type",
-    options=sorted(df["Income_Group"].dropna().unique())
-)
 
 if income_filter:
     df = df[df["Income_Group"].isin(income_filter)]
