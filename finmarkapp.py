@@ -199,9 +199,6 @@ top_segment = combined.sort_values(
 ).head(3)
 
 
-if income_filter:
-    df = df[df["Income_Group"].isin(income_filter)]
-
 # -----------------------
 # KPIs
 # -----------------------
