@@ -157,6 +157,13 @@ if st.sidebar.button("Reset Filters"):
     st.session_state.clear()
     st.rerun()
 
+income_filter = st.multiselect(
+    "Select Income Type",
+    options=sorted(df["Income_Group"].dropna().unique())
+)
+
+
+
 # -----------------------
 # APPLY FILTERS
 # -----------------------
@@ -196,7 +203,8 @@ top_segment = combined.sort_values(
     ascending=False
 ).head(3)
 
-
+if income_filter:
+    df = df[df["Income_Group"].isin(income_filter)]
 
 # -----------------------
 # KPIs
