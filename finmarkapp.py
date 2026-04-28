@@ -96,22 +96,33 @@ df['population_wt'] = pd.to_numeric(
 )
 
 def classify_income(source):
+    if pd.isna(source):
+        return "Unknown"
+    
+    source = int(source)
+
     if source == 1:
         return "Formally Employed"
+    
     elif source in [2, 3, 4]:
         return "Informally Employed"
+    
     elif source in [5, 6]:
         return "Passive Income"
+    
     elif source in [7, 8]:
         return "Social Welfare Dependent"
+    
     elif source in [9, 11]:
         return "Financially Dependent"
+    
     elif source in [10, 12]:
         return "Other / Unstable"
+    
     else:
         return "Unknown"
 
-df["Income_Group"] = df["2.4"].apply(classify_income)
+df["Income_Group"] = df["2_4"].apply(classify_income)
 
 # -----------------------
 # SIDEBAR FILTERS
