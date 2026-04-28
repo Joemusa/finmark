@@ -121,7 +121,7 @@ def classify_income(source):
         else:
             return "Unknown"
 
-df["Income_Group"] = df["2_4"].apply(classify_income)
+    df["Income_Group"] = df["2_4"].apply(classify_income)
 # -----------------------
 # SIDEBAR FILTERS
 # -----------------------
