@@ -102,7 +102,7 @@ def classify_income(source):
     else:
         return "Unknown"
 
-df["Income_Group"] = df["D2_4"].apply(classify_income)
+#df["Income_Group"] = df["D2_4"].apply(classify_income)
 
 df = load_data()
 
