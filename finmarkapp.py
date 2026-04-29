@@ -3,8 +3,8 @@ import pandas as pd
 import plotly.express as px
 import numpy as np
 
-df = pd.read_excel("FinScope Tanzania 2023_Individual Main Data_FINAL_clean data (2).xlsx")
-df.to_parquet("FinScope Tanzania 2023_Individual Main Data_FINAL_clean data (2).parquet")
+#df = pd.read_excel("FinScope Tanzania 2023_Individual Main Data_FINAL_clean data (2).xlsx")
+#df.to_parquet("FinScope Tanzania 2023_Individual Main Data_FINAL_clean data (2).parquet")
 
 #np.average(df['Included'], weights=df['population_wt'])
 
@@ -20,8 +20,8 @@ st.title("📊 Financial Inclusion Dashboard")
 # -----------------------
 @st.cache_data
 def load_data():
-    df = pd.read_parquet(
-        "FinScope Tanzania 2023_Individual Main Data_FINAL_clean data (2).parquet"
+    df = pd.read_excel(
+        "FinScope Tanzania 2023_Individual Main Data_FINAL_clean data (2).xlsx"
     )
 
     # Clean column names
