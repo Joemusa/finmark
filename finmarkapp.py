@@ -156,10 +156,19 @@ health = st.sidebar.multiselect(
     key="health"
 )
 
-income_filter = st.sidebar.multiselect(
+# 4. ADD FILTER 👇 THIS IS WHERE IT GOES
+
+income_filter = st.multiselect(
     "Select Income Type",
     options=sorted(df["Income_Group"].dropna().unique())
 )
+
+# 5. APPLY FILTER
+if income_filter:
+    df = df[df["Income_Group"].isin(income_filter)]
+
+# 6. USE FILTERED DATA
+st.write(df)
 
 
 # -----------------------
