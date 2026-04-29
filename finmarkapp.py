@@ -22,7 +22,35 @@ def load_data():
     )
 
     # Clean column names
-    df.columns = df.columns.str.strip()
+    df.columns = df.columns.str.strip().str.replace(".", "_")
+    def classify_income(source):
+        if pd.isna(source):
+            return "Unknown"
+        
+        source = int(source)
+    
+        if source == 1:
+            return "Formally Employed"
+        
+        elif source in [2, 3, 4]:
+            return "Informally Employed"
+        
+        elif source in [5, 6]:
+            return "Passive Income"
+        
+        elif source in [7, 8]:
+            return "Social Welfare Dependent"
+        
+        elif source in [9, 11]:
+            return "Financially Dependent"
+        
+        elif source in [10, 12]:
+            return "Other / Unstable"
+        
+        else:
+            return "Unknown"
+
+    df["Income_Group"] = df["D2_4"].apply(classify_income)
 
     # Convert Yes/No (1/2 → 1/0)
     df['BANKED'] = df['BANKED'].replace({2: 0})
@@ -73,35 +101,10 @@ def load_data():
     
 
     return df
-    df.columns = df.columns.str.strip().str.replace(".", "_")
-    def classify_income(source):
-        if pd.isna(source):
-            return "Unknown"
-        
-        source = int(source)
     
-        if source == 1:
-            return "Formally Employed"
-        
-        elif source in [2, 3, 4]:
-            return "Informally Employed"
-        
-        elif source in [5, 6]:
-            return "Passive Income"
-        
-        elif source in [7, 8]:
-            return "Social Welfare Dependent"
-        
-        elif source in [9, 11]:
-            return "Financially Dependent"
-        
-        elif source in [10, 12]:
-            return "Other / Unstable"
-        
-        else:
-            return "Unknown"
     
-    df["Income_Group"] = df["D2_4"].apply(classify_income)
+    
+    
 
 df = load_data()
 
@@ -155,20 +158,13 @@ health = st.sidebar.multiselect(
     df['Health_Group'].dropna().unique(),
     key="health"
 )
-
-# 4. ADD FILTER 👇 THIS IS WHERE IT GOES
-
 income_filter = st.multiselect(
     "Select Income Type",
     options=sorted(df["Income_Group"].dropna().unique())
 )
 
-# 5. APPLY FILTER
 if income_filter:
     df = df[df["Income_Group"].isin(income_filter)]
-
-# 6. USE FILTERED DATA
-st.write(df)
 
 
 # -----------------------
