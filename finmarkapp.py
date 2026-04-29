@@ -158,7 +158,7 @@ health = st.sidebar.multiselect(
     df['Health_Group'].dropna().unique(),
     key="health"
 )
-income_filter = st.multiselect(
+income_filter = st.sidebar.multiselect(
     "Select Income Type",
     options=sorted(df["Income_Group"].dropna().unique())
 )
